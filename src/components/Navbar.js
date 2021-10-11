@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles} from '@mui/styles';
 import { alpha } from '@mui/material/styles';
 import { AppBar,InputBase,Toolbar,Typography,Badge, Avatar } from '@mui/material';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import MailIcon from '@mui/icons-material/Mail';
 import SearchIcon from '@mui/icons-material/Search';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const useStyles = makeStyles((theme)=>({
     toolbar: {
@@ -33,22 +34,31 @@ const useStyles = makeStyles((theme)=>({
         borderRadius: theme.shape.borderRadius,
         width: "50%",
         [theme.breakpoints.down('sm')]: {
-            display: "none"
+            display: (props) => (props.open ? "flex" : "none"),
+            width: "70%"
         }
     },
     input: {
         marginLeft: theme.spacing(1),
-        color: "white",
-    },
-    icons: {
-        display: "flex",
-        alignItems: "center"
+        color: "white"
     },
     searchBtn: {
         marginRight: theme.spacing(2),
         [theme.breakpoints.up('sm')]: {
             display: "none"
-        },
+        }      
+    },
+    icons: {
+        display: "flex",
+        alignItems: "center",
+        [theme.breakpoints.down('sm')]: {
+            display: (props) => (props.open ? "none" : "flex")
+        }
+    },
+    cancelBtn: {
+        [theme.breakpoints.up('sm')]: {
+            display: "none"
+        } 
     },
     badge: {
         marginRight: theme.spacing(2)
@@ -56,7 +66,8 @@ const useStyles = makeStyles((theme)=>({
 }))
 
 export const Navbar = () => {
-  const classes = useStyles();
+  const [open,setOpen] = useState(false);
+  const classes = useStyles({open});
   return (
     <AppBar>
         <Toolbar className={classes.toolbar}>
@@ -69,9 +80,14 @@ export const Navbar = () => {
           <div className={classes.search}>
               <SearchIcon/>
               <InputBase className={classes.input} placeholder="Search..."/>
+              <div className={classes.cancelBtn}>
+                  <CancelIcon onClick={()=>setOpen(false)}/>
+              </div>
           </div>
           <div className={classes.icons}>
-              <SearchIcon className={classes.searchBtn} />
+              <div className={classes.searchBtn}>
+              <SearchIcon onClick={()=>setOpen(true)} />
+              </div>
               <Badge badgeContent={4} color="secondary" className={classes.badge}>
                  <MailIcon />
               </Badge>
