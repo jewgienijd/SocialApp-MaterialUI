@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { Tooltip, Fab, Modal, Container,TextField, MenuItem, RadioGroup, FormControlLabel, Radio, FormLabel, Button } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add'
+import AddIcon from '@mui/icons-material/Add';
+import { SnackbarAlert } from './SnackbarAlert';
 
 
 const useStyles = makeStyles((theme)=>({
@@ -42,6 +43,8 @@ const useStyles = makeStyles((theme)=>({
 export const Add = () => {
   const classes = useStyles();
   const [open,setOpen] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
+  
   return (
     <div className={classes.addBtn}>
       <Tooltip title="Add" aria-label="add" onClick={()=>setOpen(true)}>
@@ -94,6 +97,10 @@ export const Add = () => {
                   </div>
                   <div class={classes.item}>
                       <Button 
+                        onClick={function(){
+                            setOpenSnack(true)
+                            setOpen(false)}
+                        }
                         variant="outlined"
                         color="primary"
                         style={{marginRight:20}}> 
@@ -109,6 +116,7 @@ export const Add = () => {
               </form>
           </Container>
       </Modal>
+      <SnackbarAlert openSnack={openSnack} setOpenSnack={setOpenSnack}/>
     </div>
   )
 }
