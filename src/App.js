@@ -5,12 +5,13 @@ import { Navbar } from './components/Navbar';
 import { Leftbar } from './components/Leftbar';
 import { Rightbar } from './components/Rightbar';
 import { Feed } from './components/Feed';
+import { Add } from './components/Add';
 
 const useStyles = makeStyles((theme)=>({
   rightMenu: {
     [theme.breakpoints.down('sm')]: {
       display: "none"
-    }
+    },
   }
 }))
 
@@ -30,6 +31,7 @@ const App = () => {
              <Rightbar />
            </Grid>
          </Grid>
+         <Add />
     </div>
   );
 }
